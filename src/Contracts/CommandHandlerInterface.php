@@ -1,12 +1,18 @@
 <?php
+namespace CommandProcessor\Contracts;
 
-namespace Webbeaver\CommandProcessor\Contracts;
-
-use Webbeaver\CommandProcessor\DTO\CommandContext;
+use CommandProcessor\DTO\CommandContext;
 
 interface CommandHandlerInterface
 {
-    public static function commandName(): string;
+    /**
+     * Проверяет, может ли обработчик обработать команду.
+     */
+    public function supports(string $command, CommandContext $context): bool;
 
-    public function handle(string $args, CommandContext $context): void;
+    /**
+     * Обрабатывает команду.
+     */
+    public function handle(string $command, CommandContext $context): mixed;
 }
+

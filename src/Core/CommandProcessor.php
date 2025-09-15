@@ -1,50 +1,27 @@
 <?php
+namespace CommandProcessor\Core;
 
-namespace Webbeaver\CommandProcessor\Core;
-
-use Psr\Log\LoggerInterface;
-use Webbeaver\CommandProcessor\Contracts\CommandHandlerInterface;
-use Webbeaver\CommandProcessor\Contracts\DealRepositoryInterface;
-use Webbeaver\CommandProcessor\DTO\CommandContext;
+use CommandProcessor\Contracts\CommandHandlerInterface;
+use CommandProcessor\DTO\CommandContext;
 
 class CommandProcessor
 {
+    /** @var CommandHandlerInterface[] */
     private array $handlers = [];
 
-    public function __construct(
-        private DealRepositoryInterface $repository,
-        private LoggerInterface $logger
-    ) {}
-
-    public function registerHandler(string $command, CommandHandlerInterface $handler): void
+    public function registerHandler(CommandHandlerInterface $handler): void
     {
-        $this->handlers[$command] = $handler;
+        $this->handlers[] = $handler;
     }
 
-    public function process(string $input, int $dealId): void
+    public function process(string $command, CommandContext $context): mixed
     {
-        [$command, $args] = $this->parse($input);
-
-        if (! isset($this->handlers[$command])) {
-            $this->logger->warning("Unknown command: {$command}");
-
-            return;
+        foreach ($this->handlers as $handler) {
+            if ($handler->supports($command, $context)) {
+                return $handler->handle($command, $context);
+            }
         }
-
-        $deal = $this->repository->getDeal($dealId);
-        $context = new CommandContext($deal);
-
-        $this->logger->info("Executing {$command} with args={$args}");
-
-        $this->handlers[$command]->handle($args, $context);
-    }
-
-    private function parse(string $input): array
-    {
-        $parts = explode(' ', trim($input), 2);
-        $command = $parts[0];
-        $args = $parts[1] ?? '';
-
-        return [$command, $args];
+        throw new \RuntimeException("No handler found for command: $command");
     }
 }
+

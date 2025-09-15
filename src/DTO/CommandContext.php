@@ -1,10 +1,12 @@
 <?php
+namespace CommandProcessor\DTO;
 
-namespace Webbeaver\CommandProcessor\DTO;
-
-final class CommandContext
+class CommandContext
 {
     public function __construct(
-        public Deal $deal
+        public readonly array $params = [],
+        public readonly ?string $userId = null,
+        public readonly array $meta = []
     ) {}
 }
+

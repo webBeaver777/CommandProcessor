@@ -1,40 +1,23 @@
 {
-  "name": "webbeaver777/command-processor",
-  "description": "Framework-agnostic PHP package for text command processing (CRM).",
-  "type": "library",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "webBeaver777"
-    }
-  ],
-  "require": {
-    "php": "^8.0",
-    "psr/log": "^1.1 || ^2.0 || ^3.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Webbeaver\\CommandProcessor\\": "src/"
-    }
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^9.5",
-    "monolog/monolog": "^2.0",
-    "laravel/pint": "^1.24"
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Webbeaver\\CommandProcessor\\Laravel\\CommandProcessorServiceProvider"
-      ]
-    }
-  },
-  "scripts": {
-    "post-install-cmd": [
-      "@php scripts/copy-tests.php"
-    ],
-    "post-update-cmd": [
-      "@php scripts/copy-tests.php"
-    ]
-  }
+    "name": "your-vendor/your-package",
+    "description": "Your package description",
+    "type": "library",
+    "require": {
+        "php": "^7.2 || ^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5 || ^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CommandProcessor\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CommandProcessor\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

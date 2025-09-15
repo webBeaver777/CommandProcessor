@@ -1,26 +1,20 @@
 <?php
+namespace CommandProcessor\Handlers;
 
-namespace Webbeaver\CommandProcessor\Handlers;
-
-use Webbeaver\CommandProcessor\Contracts\CommandHandlerInterface;
-use Webbeaver\CommandProcessor\Contracts\DealRepositoryInterface;
-use Webbeaver\CommandProcessor\DTO\CommandContext;
+use CommandProcessor\Contracts\CommandHandlerInterface;
+use CommandProcessor\DTO\CommandContext;
 
 class ContactCommandHandler implements CommandHandlerInterface
 {
-    public function __construct(private DealRepositoryInterface $repository) {}
-
-    public static function commandName(): string
+    public function supports(string $command, CommandContext $context): bool
     {
-        return '/контакт';
+        return str_starts_with(trim($command), '/contact');
     }
 
-    public function handle(string $args, CommandContext $context): void
+    public function handle(string $command, CommandContext $context): string
     {
-        if (empty($context->deal->contact)) {
-            $this->repository->addMessage($context->deal->id, 'Контакт клиента не указан');
-        } else {
-            $this->repository->addMessage($context->deal->id, "Контакт клиента: {$context->deal->contact}");
-        }
+        // Пример обработки команды
+        return 'Контактная информация: info@example.com';
     }
 }
+
