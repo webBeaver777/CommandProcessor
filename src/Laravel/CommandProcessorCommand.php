@@ -1,10 +1,10 @@
 <?php
 
-namespace CommandProcessor\Laravel;
+namespace Webbeaver\CommandProcessor\Laravel;
 
 use Illuminate\Console\Command;
-use CommandProcessor\Core\CommandProcessor;
-use CommandProcessor\DTO\CommandContext;
+use Webbeaver\CommandProcessor\Core\CommandProcessor;
+use Webbeaver\CommandProcessor\DTO\CommandContext;
 
 class CommandProcessorCommand extends Command
 {
@@ -21,4 +21,3 @@ class CommandProcessorCommand extends Command
         $this->info('Результат: ' . print_r($result, true));
     }
 }
-
