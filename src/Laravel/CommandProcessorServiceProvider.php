@@ -52,7 +52,7 @@ class CommandProcessorServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                \CommandProcessor\Laravel\CommandProcessorCommand::class,
+                \Webbeaver\CommandProcessor\Laravel\CommandProcessorCommand::class,
             ]);
         }
     }
