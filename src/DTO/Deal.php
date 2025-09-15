@@ -9,4 +9,6 @@ final class Deal
         public array $properties = [],
         public ?string $contact = null,
     ) {}
+
+    public array $messages = [];
 }

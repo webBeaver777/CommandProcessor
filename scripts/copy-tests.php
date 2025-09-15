@@ -19,8 +19,8 @@ function copy_recursive($src, $dst)
     closedir($dir);
 }
 
-$src = __DIR__.'/../publishable/tests';
-$dst = __DIR__.'/../tests/vendor/command-processor';
+$src = __DIR__.'/../publishable/tests/Feature';
+$dst = __DIR__.'/../tests/Feature';
 if (is_dir($src)) {
     copy_recursive($src, $dst);
     echo "Tests copied to $dst\n";

@@ -1,0 +1,1 @@
+{"version":1,"defects":{"ContactCommandHandlerTest::test_contact_command_without_contact":3},"times":{"ContactCommandHandlerTest::test_contact_command_with_contact":0.004,"ContactCommandHandlerTest::test_contact_command_without_contact":0}}

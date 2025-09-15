@@ -35,6 +35,16 @@ class InMemoryDealRepository implements DealRepositoryInterface
 
     public function addMessage(int $dealId, string $message): void
     {
+        // Сохраняем сообщения в массив, чтобы тесты могли их проверять
+        if (! isset($this->deals[$dealId]->messages)) {
+            $this->deals[$dealId]->messages = [];
+        }
+        $this->deals[$dealId]->messages[] = $message;
         echo "[Deal {$dealId}] {$message}\n";
+    }
+
+    public function getMessages(int $dealId): array
+    {
+        return $this->deals[$dealId]->messages ?? [];
     }
 }

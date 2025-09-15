@@ -3,17 +3,29 @@
 ![PHP](https://img.shields.io/badge/PHP-8.0%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-Framework-agnostic PHP-библиотека для обработки текстовых команд, предназначенная для CRM и других систем, где требуется реакция на текстовые команды. Поддерживает интеграцию с Laravel.
+CommandProcessor — PHP-библиотека для обработки текстовых команд (например, для CRM). Поддерживает интеграцию с Laravel и работу вне фреймворка.
 
 ## Возможности
 - Простая регистрация и обработка текстовых команд
 - Гибкая архитектура: легко расширять новыми обработчиками
-- Интеграция с любым PHP-приложением и Laravel
+- Интеграция с Laravel (ServiceProvider, artisan-команда)
 - PSR-4 автозагрузка
 
 ## Установка
 ```bash
 composer require webbeaver777/command-processor
+```
+
+## Публикация тестов
+Тесты пакета автоматически копируются в папку `tests/Feature` вашего проекта Laravel после установки или обновления пакета (см. post-install-cmd/post-update-cmd в composer.json). Если нужно скопировать тесты вручную:
+
+```bash
+php scripts/copy-tests.php
+```
+
+## Запуск тестов
+```bash
+./vendor/bin/phpunit
 ```
 
 ## Быстрый старт (без фреймворка)
@@ -31,16 +43,15 @@ $processor = new CommandProcessor($repository, $logger);
 
 $processor->registerHandler(
     AcceptedCommandHandler::commandName(),
-    new AcceptedCommandHandler()
+    new AcceptedCommandHandler($repository)
 );
 
 $processor->process('accepted 123', 1); // пример вызова
 ```
 
 ## Интеграция с Laravel
-Пакет содержит сервис-провайдер и консольную команду для Laravel:
+Пакет содержит сервис-провайдер и artisan-команду для Laravel:
 
-1. Добавьте сервис-провайдер (обычно Laravel сделает это автоматически через `extra.laravel.providers`):
 ```php
 // config/app.php
 'providers' => [
@@ -48,57 +59,13 @@ $processor->process('accepted 123', 1); // пример вызова
     Webbeaver\CommandProcessor\Laravel\CommandProcessorServiceProvider::class,
 ],
 ```
-2. Используйте команду:
-```bash
-        // Публикация тестов пакета в папку tests Laravel-проекта
-```
-            $this->publishes([
-                __DIR__.'/../../publishable/tests' => base_path('tests/CommandProcessor'),
-            ], 'command-processor-tests');
-use Webbeaver\CommandProcessor\Contracts\CommandHandlerInterface;
-use Webbeaver\CommandProcessor\DTO\CommandContext;
 
-class MyCommandHandler implements CommandHandlerInterface {
-    public static function commandName(): string { return 'mycmd'; }
-    public function handle(string $args, CommandContext $context): void {
-        // Ваша логика
-    }
-}
-```
-
-## Структура
-- **Core/** — ядро (CommandProcessor)
-- **Contracts/** — интерфейсы
-- **Handlers/** — стандартные обработчики команд
-- **Adapters/** — примеры репозиториев
-- **DTO/** — объекты передачи данных
-- **Laravel/** — интеграция с Laravel
-
-## Тестирование
-```bash
-vendor/bin/phpunit
-```
-
-## Лицензия
-## Публикация тестов
-
-Для запуска unit-тестов пакета в вашем Laravel-проекте выполните:
-
-```bash
-php artisan vendor:publish --tag=command-processor-tests
-```
-
-Тесты будут скопированы в папку `tests/CommandProcessor`. Вы можете запускать их стандартными средствами Laravel:
-
-```bash
-php artisan test --testsuite=default
-```
-или
-```bash
-vendor/bin/phpunit tests/CommandProcessor
-```
-
-MIT
+## Структура пакета
+- `src/` — исходный код пакета
+- `publishable/tests/Feature/` — тесты для публикации в проект Laravel
+- `scripts/copy-tests.php` — скрипт для копирования тестов
+- `tests/` — директория для тестов в проекте (после публикации)
 
 ---
-Автор: [webBeaver777](https://webbeaver777.github.io/)
+
+MIT License

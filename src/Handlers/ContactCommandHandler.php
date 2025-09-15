@@ -17,7 +17,10 @@ class ContactCommandHandler implements CommandHandlerInterface
 
     public function handle(string $args, CommandContext $context): void
     {
-        $contact = $context->deal->contact ?? 'неизвестно';
-        $this->repository->addMessage($context->deal->id, "Контакт клиента: {$contact}");
+        if (empty($context->deal->contact)) {
+            $this->repository->addMessage($context->deal->id, 'Контакт клиента не указан');
+        } else {
+            $this->repository->addMessage($context->deal->id, "Контакт клиента: {$context->deal->contact}");
+        }
     }
 }
