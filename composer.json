@@ -28,5 +28,13 @@
         "Webbeaver\\CommandProcessor\\Laravel\\CommandProcessorServiceProvider"
       ]
     }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "@php scripts/copy-tests.php"
+    ],
+    "post-update-cmd": [
+      "@php scripts/copy-tests.php"
+    ]
   }
 }
