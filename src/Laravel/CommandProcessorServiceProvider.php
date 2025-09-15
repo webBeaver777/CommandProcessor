@@ -50,7 +50,9 @@ class CommandProcessorServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        file_put_contents(base_path('commandprocessor_boot.log'), date('c') . " boot() called\n", FILE_APPEND);
         if ($this->app->runningInConsole()) {
+            file_put_contents(base_path('commandprocessor_boot.log'), date('c') . " runningInConsole true\n", FILE_APPEND);
             $this->commands([
                 \Webbeaver\CommandProcessor\Laravel\CommandProcessorCommand::class,
             ]);
