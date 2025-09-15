@@ -3,8 +3,8 @@
 namespace Webbeaver\CommandProcessor\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use Webbeaver\CommandProcessor\Core\CommandProcessor;
 use Webbeaver\CommandProcessor\Adapters\InMemoryDealRepository;
+use Webbeaver\CommandProcessor\Core\CommandProcessor;
 use Webbeaver\CommandProcessor\Handlers\AcceptedCommandHandler;
 use Webbeaver\CommandProcessor\Handlers\ContactCommandHandler;
 use Webbeaver\CommandProcessor\Handlers\ReasonSetCommandHandler;
@@ -18,7 +18,7 @@ class CommandProcessorServiceProvider extends ServiceProvider
         $this->app->singleton(CommandProcessor::class, function ($app) {
             // Пока что используем InMemoryDealRepository (для тестов)
             // Позже легко заменить на EloquentDealRepository
-            $repo = new InMemoryDealRepository();
+            $repo = new InMemoryDealRepository;
 
             // Берем встроенный Laravel-логгер (обертка над Monolog)
             $logger = $app['log'];
@@ -50,9 +50,9 @@ class CommandProcessorServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        file_put_contents(base_path('commandprocessor_boot.log'), date('c') . " boot() called\n", FILE_APPEND);
+        file_put_contents(base_path('commandprocessor_boot.log'), date('c')." boot() called\n", FILE_APPEND);
         if ($this->app->runningInConsole()) {
-            file_put_contents(base_path('commandprocessor_boot.log'), date('c') . " runningInConsole true\n", FILE_APPEND);
+            file_put_contents(base_path('commandprocessor_boot.log'), date('c')." runningInConsole true\n", FILE_APPEND);
             $this->commands([
                 \Webbeaver\CommandProcessor\Laravel\CommandProcessorCommand::class,
             ]);

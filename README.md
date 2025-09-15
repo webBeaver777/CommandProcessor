@@ -50,12 +50,11 @@ $processor->process('accepted 123', 1); // пример вызова
 ```
 2. Используйте команду:
 ```bash
-php artisan command:processor 222 "/причина_закрытия удалена транзакция"
+        // Публикация тестов пакета в папку tests Laravel-проекта
 ```
-
-## Расширение
-Для добавления своей команды реализуйте интерфейс `CommandHandlerInterface`:
-```php
+            $this->publishes([
+                __DIR__.'/../../publishable/tests' => base_path('tests/CommandProcessor'),
+            ], 'command-processor-tests');
 use Webbeaver\CommandProcessor\Contracts\CommandHandlerInterface;
 use Webbeaver\CommandProcessor\DTO\CommandContext;
 
@@ -81,6 +80,24 @@ vendor/bin/phpunit
 ```
 
 ## Лицензия
+## Публикация тестов
+
+Для запуска unit-тестов пакета в вашем Laravel-проекте выполните:
+
+```bash
+php artisan vendor:publish --tag=command-processor-tests
+```
+
+Тесты будут скопированы в папку `tests/CommandProcessor`. Вы можете запускать их стандартными средствами Laravel:
+
+```bash
+php artisan test --testsuite=default
+```
+или
+```bash
+vendor/bin/phpunit tests/CommandProcessor
+```
+
 MIT
 
 ---

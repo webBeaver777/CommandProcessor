@@ -1,18 +1,18 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use Webbeaver\CommandProcessor\Core\CommandProcessor;
-use Webbeaver\CommandProcessor\Handlers\AcceptedCommandHandler;
-use Webbeaver\CommandProcessor\Adapters\InMemoryDealRepository;
-use Webbeaver\CommandProcessor\DTO\Deal;
-use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use PHPUnit\Framework\TestCase;
+use Webbeaver\CommandProcessor\Adapters\InMemoryDealRepository;
+use Webbeaver\CommandProcessor\Core\CommandProcessor;
+use Webbeaver\CommandProcessor\DTO\Deal;
+use Webbeaver\CommandProcessor\Handlers\AcceptedCommandHandler;
 
 class AcceptedCommandHandlerTest extends TestCase
 {
-    public function testAcceptedCommand()
+    public function test_accepted_command()
     {
-        $repo = new InMemoryDealRepository();
+        $repo = new InMemoryDealRepository;
         $logger = new Logger('test');
         $logger->pushHandler(new StreamHandler('php://stdout'));
 

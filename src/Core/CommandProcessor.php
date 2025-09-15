@@ -25,8 +25,9 @@ class CommandProcessor
     {
         [$command, $args] = $this->parse($input);
 
-        if (!isset($this->handlers[$command])) {
+        if (! isset($this->handlers[$command])) {
             $this->logger->warning("Unknown command: {$command}");
+
             return;
         }
 
@@ -43,6 +44,7 @@ class CommandProcessor
         $parts = explode(' ', trim($input), 2);
         $command = $parts[0];
         $args = $parts[1] ?? '';
+
         return [$command, $args];
     }
 }
