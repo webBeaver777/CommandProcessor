@@ -14,10 +14,20 @@ class CommandProcessorCommand extends Command
     public function handle()
     {
         $args = $this->argument('arguments');
-        // Преобразуйте аргументы в CommandContext или нужный формат
-        $context = new CommandContext($args);
-        $processor = app(CommandProcessor::class);
-        $result = $processor->process($context);
+        if (count($args) < 2) {
+            $this->error('Нужно передать как минимум ID сделки и команду. Пример: php artisan command:processor 42 "/принято 500 офис"');
+            return 1;
+        }
+        $dealId = array_shift($args);
+        $commandText = implode(' ', $args);
+
+        $deal = new \Webbeaver\CommandProcessor\DTO\Deal((int)$dealId);
+        $context = new \Webbeaver\CommandProcessor\DTO\CommandContext($deal);
+
+        $processor = app(\Webbeaver\CommandProcessor\Core\CommandProcessor::class);
+        $result = $processor->process($commandText, $dealId);
+
         $this->info('Результат: ' . print_r($result, true));
+        return 0;
     }
 }
