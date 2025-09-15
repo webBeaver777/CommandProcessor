@@ -11,7 +11,10 @@ class InMemoryDealRepository implements DealRepositoryInterface
 
     public function getDeal(int $id): Deal
     {
-        return $this->deals[$id] ?? new Deal($id);
+        if (!isset($this->deals[$id])) {
+            $this->deals[$id] = new Deal($id);
+        }
+        return $this->deals[$id];
     }
 
     public function saveDeal(Deal $deal): void
