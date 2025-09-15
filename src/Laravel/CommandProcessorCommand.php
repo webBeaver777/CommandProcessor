@@ -21,11 +21,8 @@ class CommandProcessorCommand extends Command
         $dealId = array_shift($args);
         $commandText = implode(' ', $args);
 
-        $deal = new \Webbeaver\CommandProcessor\DTO\Deal((int)$dealId);
-        $context = new \Webbeaver\CommandProcessor\DTO\CommandContext($deal);
-
         $processor = app(\Webbeaver\CommandProcessor\Core\CommandProcessor::class);
-        $result = $processor->process($commandText, $dealId);
+        $result = $processor->process($commandText, (int)$dealId);
 
         $this->info('Результат: ' . print_r($result, true));
         return 0;
