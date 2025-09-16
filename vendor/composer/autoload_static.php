@@ -47,7 +47,7 @@ class ComposerStaticInitf20f60f180e1776cb9a238b2f9752509
         ),
         'Webbeaver\\CommandProcessor\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/src',
+            0 => __DIR__ . '/../..' . '/src/Webbeaver/CommandProcessor',
         ),
         'Psr\\Log\\' => 
         array (

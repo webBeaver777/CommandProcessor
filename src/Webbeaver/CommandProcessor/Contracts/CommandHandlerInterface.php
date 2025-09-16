@@ -1,7 +1,7 @@
 <?php
-namespace CommandProcessor\Contracts;
+namespace Webbeaver\CommandProcessor\Contracts;
 
-use CommandProcessor\DTO\CommandContext;
+use Webbeaver\CommandProcessor\DTO\CommandContext;
 
 interface CommandHandlerInterface
 {
@@ -15,4 +15,3 @@ interface CommandHandlerInterface
      */
     public function handle(string $command, CommandContext $context): mixed;
 }
-

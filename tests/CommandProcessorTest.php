@@ -25,7 +25,8 @@ class CommandProcessorTest extends TestCase
         $deal = new Deal(1);
         $deal->contact = 'info@example.com';
         $repo->saveDeal($deal);
-        $processor->process('/контакт', 1);
+        $context = new \Webbeaver\CommandProcessor\DTO\CommandContext(['deal' => $deal]);
+        $processor->process('/контакт', $context);
         $messages = $repo->getMessages(1);
         $this->assertContains('Контакт клиента: info@example.com', $messages);
     }
@@ -36,7 +37,15 @@ class CommandProcessorTest extends TestCase
         $logger = new Logger('test');
         $logger->pushHandler(new StreamHandler('php://stdout'));
         $processor = new CommandProcessor($repo, $logger);
+        $deal = new Deal(2);
+        $repo->saveDeal($deal);
+        $context = new \Webbeaver\CommandProcessor\DTO\CommandContext(['deal' => $deal]);
         $this->expectException(\RuntimeException::class);
-        $processor->process('/unknown', 1);
+        $processor->process('/unknown', $context);
+    }
+
+    public function test_sanity_check()
+    {
+        $this->assertTrue(true);
     }
 }

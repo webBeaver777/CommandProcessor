@@ -15,7 +15,7 @@ class AcceptedCommandHandler implements CommandHandlerInterface
         return '/принято';
     }
 
-    public function handle(string $args, CommandContext $context): void
+    public function handle(string $args, CommandContext $context): mixed
     {
         [$amount, $office] = explode(' ', $args, 2) + [null, null];
 
@@ -23,5 +23,12 @@ class AcceptedCommandHandler implements CommandHandlerInterface
         $this->repository->setProperty($context->deal->id, 15, $office);
 
         $this->repository->addMessage($context->deal->id, "Принято: сумма={$amount}, офис={$office}");
+
+        return null;
+    }
+
+    public function supports(string $command, CommandContext $context): bool
+    {
+        return str_starts_with(trim($command), self::commandName());
     }
 }

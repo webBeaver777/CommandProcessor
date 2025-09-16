@@ -1,8 +1,8 @@
 <?php
-namespace CommandProcessor\Core;
+namespace Webbeaver\CommandProcessor\Core;
 
-use CommandProcessor\Contracts\CommandHandlerInterface;
-use CommandProcessor\DTO\CommandContext;
+use Webbeaver\CommandProcessor\Contracts\CommandHandlerInterface;
+use Webbeaver\CommandProcessor\DTO\CommandContext;
 
 class CommandProcessor
 {
@@ -24,4 +24,3 @@ class CommandProcessor
         throw new \RuntimeException("No handler found for command: $command");
     }
 }
-

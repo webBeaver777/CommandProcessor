@@ -15,9 +15,15 @@ class ReasonShowCommandHandler implements CommandHandlerInterface
         return '/причина';
     }
 
-    public function handle(string $args, CommandContext $context): void
+    public function handle(string $args, CommandContext $context): mixed
     {
         $reason = $this->repository->getProperty($context->deal->id, 222) ?? 'не указана';
         $this->repository->addMessage($context->deal->id, "Причина закрытия: {$reason}");
+        return null;
+    }
+
+    public function supports(string $command, CommandContext $context): bool
+    {
+        return str_starts_with(trim($command), self::commandName());
     }
 }

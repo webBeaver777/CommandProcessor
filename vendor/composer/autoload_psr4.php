@@ -7,7 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Webbeaver\\CommandProcessor\\Tests\\' => array($baseDir . '/tests'),
-    'Webbeaver\\CommandProcessor\\' => array($baseDir . '/src'),
+    'Webbeaver\\CommandProcessor\\' => array($baseDir . '/src/Webbeaver/CommandProcessor'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),

@@ -1,5 +1,5 @@
 <?php
-namespace CommandProcessor\DTO;
+namespace Webbeaver\CommandProcessor\DTO;
 
 class CommandContext
 {
@@ -9,4 +9,3 @@ class CommandContext
         public readonly array $meta = []
     ) {}
 }
-

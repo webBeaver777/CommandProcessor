@@ -20,15 +20,14 @@ class ContactCommandHandlerTest extends TestCase
 
         $processor = new CommandProcessor($repo, $logger);
         $processor->registerHandler(
-            ContactCommandHandler::commandName(),
             new ContactCommandHandler($repo)
         );
 
         $deal = new Deal(101);
         $deal->contact = 'Иван Иванов';
         $repo->saveDeal($deal);
-
-        $processor->process('/контакт', 101);
+        $context = new \Webbeaver\CommandProcessor\DTO\CommandContext(['deal' => $deal]);
+        $processor->process('/контакт', $context);
 
         $messages = $repo->getMessages(101);
         $this->assertContains('Контакт клиента: Иван Иванов', $messages);
@@ -42,15 +41,19 @@ class ContactCommandHandlerTest extends TestCase
 
         $processor = new CommandProcessor($repo, $logger);
         $processor->registerHandler(
-            ContactCommandHandler::commandName(),
             new ContactCommandHandler($repo)
         );
 
         $deal = new Deal(102);
         $repo->saveDeal($deal);
-
-        $processor->process('/контакт', 102);
+        $context = new \Webbeaver\CommandProcessor\DTO\CommandContext(['deal' => $deal]);
+        $processor->process('/контакт', $context);
         $messages = $repo->getMessages(102);
         $this->assertContains('Контакт клиента не указан', $messages);
+    }
+
+    public function test_sanity_check()
+    {
+        $this->assertTrue(true);
     }
 }

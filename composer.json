@@ -10,7 +10,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Webbeaver\\CommandProcessor\\": "src/"
+      "Webbeaver\\CommandProcessor\\": "src/Webbeaver/CommandProcessor/"
     }
   },
   "autoload-dev": {

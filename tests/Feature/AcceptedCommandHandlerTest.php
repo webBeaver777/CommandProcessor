@@ -18,17 +18,15 @@ class AcceptedCommandHandlerTest extends TestCase
 
         $processor = new CommandProcessor($repo, $logger);
         $processor->registerHandler(
-            AcceptedCommandHandler::commandName(),
             new AcceptedCommandHandler($repo)
         );
 
         $deal = new Deal(42);
         $repo->saveDeal($deal);
-
-        $processor->process('/принято 500 офис', 42);
+        $context = new \Webbeaver\CommandProcessor\DTO\CommandContext(['deal' => $deal]);
+        $processor->process('/принято 500 офис', $context);
 
         $this->assertEquals(500, $repo->getProperty(42, 14));
         $this->assertEquals('офис', $repo->getProperty(42, 15));
     }
 }
-
