@@ -13,7 +13,7 @@ class CopyCommandProcessorTests extends Command
     public function handle()
     {
         $filesystem = new Filesystem();
-        $source = __DIR__ . '/../../../../tests/Feature';
+        $source = base_path('vendor/webbeaver777/command-processor/tests/Feature');
         $destination = base_path('tests/Feature');
 
         if (!$filesystem->exists($source)) {
@@ -27,4 +27,3 @@ class CopyCommandProcessorTests extends Command
         return 0;
     }
 }
-
