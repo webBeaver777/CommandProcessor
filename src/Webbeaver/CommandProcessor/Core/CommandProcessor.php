@@ -13,6 +13,8 @@ class CommandProcessor
 
     private LoggerInterface $logger;
 
+    private $repository;
+
     public function __construct($repository, LoggerInterface $logger)
     {
         $this->logger = $logger;
