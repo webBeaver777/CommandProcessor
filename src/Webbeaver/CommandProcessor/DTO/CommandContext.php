@@ -1,4 +1,5 @@
 <?php
+
 namespace Webbeaver\CommandProcessor\DTO;
 
 class CommandContext

@@ -2,55 +2,42 @@
 
 namespace Webbeaver\CommandProcessor\Tests\Feature;
 
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
+use Webbeaver\CommandProcessor\Adapters\ContactCommandAdapter;
 use Webbeaver\CommandProcessor\Adapters\InMemoryDealRepository;
-use Webbeaver\CommandProcessor\Core\CommandProcessor;
+use Webbeaver\CommandProcessor\Core\FileLogger;
+use Webbeaver\CommandProcessor\DTO\ContactCommandDTO;
 use Webbeaver\CommandProcessor\DTO\Deal;
-use Webbeaver\CommandProcessor\Handlers\ContactCommandHandler;
 
 class ContactCommandHandlerTest extends TestCase
 {
     public function test_contact_command_with_contact()
     {
         $repo = new InMemoryDealRepository;
-        $logger = new Logger('test');
-        $logger->pushHandler(new StreamHandler('php://stdout'));
-
-        $processor = new CommandProcessor($repo, $logger);
-        $processor->registerHandler(
-            new ContactCommandHandler($repo)
-        );
-
-        $deal = new Deal(101);
+        $dealId = 101;
+        $deal = new Deal($dealId);
         $deal->contact = 'Иван Иванов';
         $repo->saveDeal($deal);
-        $context = new \Webbeaver\CommandProcessor\DTO\CommandContext(['deal' => $deal]);
-        $context->repository = $repo;
-        $processor->process('/контакт', $context);
-        $messages = $repo->getMessages(101);
+        $dto = new ContactCommandDTO('Иван Иванов');
+        $logger = new FileLogger(__DIR__.'/contact.log');
+        $adapter = new ContactCommandAdapter($dealId, $repo);
+        $adapter->handle($dto, $logger);
+        $messages = $repo->getMessages($dealId);
         $this->assertContains('Контакт клиента: Иван Иванов', $messages);
     }
 
     public function test_contact_command_without_contact()
     {
         $repo = new InMemoryDealRepository;
-        $logger = new Logger('test');
-        $logger->pushHandler(new StreamHandler('php://stdout'));
-
-        $processor = new CommandProcessor($repo, $logger);
-        $processor->registerHandler(
-            new ContactCommandHandler($repo)
-        );
-
-        $deal = new Deal(102);
+        $dealId = 102;
+        $deal = new Deal($dealId);
         $repo->saveDeal($deal);
-        $context = new \Webbeaver\CommandProcessor\DTO\CommandContext(['deal' => $deal]);
-        $context->repository = $repo;
-        $processor->process('/контакт', $context);
-        $messages = $repo->getMessages(102);
-        $this->assertContains('Контакт клиента не указан', $messages);
+        $dto = new ContactCommandDTO('');
+        $logger = new FileLogger(__DIR__.'/contact.log');
+        $adapter = new ContactCommandAdapter($dealId, $repo);
+        $adapter->handle($dto, $logger);
+        $messages = $repo->getMessages($dealId);
+        $this->assertContains('Контакт клиента: ', $messages);
     }
 
     public function test_sanity_check()

@@ -7,15 +7,10 @@ namespace Webbeaver\CommandProcessor\DTO;
  */
 class ContactCommandDTO extends CommandDTO
 {
-    /** @var string */
     public string $contactName;
 
-    /**
-     * @param string $contactName
-     */
     public function __construct(string $contactName)
     {
         $this->contactName = $contactName;
     }
 }
-

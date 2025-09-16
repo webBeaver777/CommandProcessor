@@ -1,4 +1,5 @@
 <?php
+
 namespace Webbeaver\CommandProcessor\Handlers;
 
 use Webbeaver\CommandProcessor\Contracts\CommandHandlerInterface;
@@ -14,8 +15,8 @@ class ContactCommandHandler implements CommandHandlerInterface
     public function handle(string $command, CommandContext $context): mixed
     {
         $deal = $context->params['deal'] ?? null;
-        if ($deal && !empty($deal->contact)) {
-            $message = 'Контакт клиента: ' . $deal->contact;
+        if ($deal && ! empty($deal->contact)) {
+            $message = 'Контакт клиента: '.$deal->contact;
         } else {
             $message = 'Контакт клиента не указан';
         }
@@ -24,8 +25,10 @@ class ContactCommandHandler implements CommandHandlerInterface
         } elseif ($deal && property_exists($context, 'repository') && $context->repository) {
             $context->repository->addMessage($deal->id, $message);
         }
+
         return $message;
     }
+
     public static function commandName(): string
     {
         return '/контакт';

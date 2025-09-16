@@ -80,6 +80,52 @@ $adapter->handle($dto, $logger);
 - `src/Webbeaver/CommandProcessor/Core` — Фабрика, логгер
 - `src/Webbeaver/CommandProcessor/Contracts` — Интерфейсы
 
+## Стандартные команды
+
+### /принято 500 офис
+Устанавливает свойство сделки #14 = 500, а #15 = офис.
+```php
+use Webbeaver\CommandProcessor\DTO\AcceptedCommandDTO;
+use Webbeaver\CommandProcessor\Adapters\AcceptedCommandAdapter;
+
+$dto = new AcceptedCommandDTO('500', 'офис');
+$adapter = new AcceptedCommandAdapter($dealId, $dealRepository);
+$adapter->handle($dto, $logger);
+```
+
+### /контакт
+Выводит служебное сообщение с контактом клиента по текущей сделке.
+```php
+use Webbeaver\CommandProcessor\DTO\ContactCommandDTO;
+use Webbeaver\CommandProcessor\Adapters\ContactCommandAdapter;
+
+$dto = new ContactCommandDTO('Иван Иванов');
+$adapter = new ContactCommandAdapter($dealId, $dealRepository);
+$adapter->handle($dto, $logger);
+```
+
+### /причина_закрытия удалена транзакция
+Устанавливает свойство сделки #222 в "удалена транзакция".
+```php
+use Webbeaver\CommandProcessor\DTO\ReasonClosedCommandDTO;
+use Webbeaver\CommandProcessor\Adapters\ReasonClosedCommandAdapter;
+
+$dto = new ReasonClosedCommandDTO('удалена транзакция');
+$adapter = new ReasonClosedCommandAdapter($dealId, $dealRepository);
+$adapter->handle($dto, $logger);
+```
+
+### /причина
+Выводит служебное сообщение с текстом, содержащим свойство #222 текущей сделки.
+```php
+use Webbeaver\CommandProcessor\DTO\ReasonCommandDTO;
+use Webbeaver\CommandProcessor\Adapters\ReasonCommandAdapter;
+
+$dto = new ReasonCommandDTO();
+$adapter = new ReasonCommandAdapter($dealId, $dealRepository);
+$adapter->handle($dto, $logger);
+```
+
 ---
 
 Пакет легко расширяется, не зависит от Laravel, соответствует PSR-12.

@@ -1,4 +1,5 @@
 <?php
+
 namespace Webbeaver\CommandProcessor\Contracts;
 
 use Webbeaver\CommandProcessor\DTO\CommandContext;

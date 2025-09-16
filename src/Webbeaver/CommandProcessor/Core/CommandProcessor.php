@@ -1,14 +1,16 @@
 <?php
+
 namespace Webbeaver\CommandProcessor\Core;
 
+use Psr\Log\LoggerInterface;
 use Webbeaver\CommandProcessor\Contracts\CommandHandlerInterface;
 use Webbeaver\CommandProcessor\DTO\CommandContext;
-use Psr\Log\LoggerInterface;
 
 class CommandProcessor
 {
     /** @var CommandHandlerInterface[] */
     private array $handlers = [];
+
     private LoggerInterface $logger;
 
     public function __construct($repository, LoggerInterface $logger)
@@ -27,7 +29,8 @@ class CommandProcessor
         $this->logger->info("Processing command: {$command}", ['context' => $context]);
         foreach ($this->handlers as $handler) {
             if ($handler->supports($command, $context)) {
-                $this->logger->info("Handler found: " . get_class($handler));
+                $this->logger->info('Handler found: '.get_class($handler));
+
                 return $handler->handle($command, $context);
             }
         }

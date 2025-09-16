@@ -1,46 +1,43 @@
 <?php
+
 namespace Webbeaver\CommandProcessor\Tests\Feature;
 
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Webbeaver\CommandProcessor\Adapters\InMemoryDealRepository;
-use Webbeaver\CommandProcessor\Core\CommandProcessor;
+use Webbeaver\CommandProcessor\Adapters\ReasonClosedCommandAdapter;
+use Webbeaver\CommandProcessor\Adapters\ReasonCommandAdapter;
+use Webbeaver\CommandProcessor\Core\FileLogger;
 use Webbeaver\CommandProcessor\DTO\Deal;
-use Webbeaver\CommandProcessor\Handlers\ReasonSetCommandHandler;
-use Webbeaver\CommandProcessor\Handlers\ReasonShowCommandHandler;
-use Webbeaver\CommandProcessor\DTO\CommandContext;
+use Webbeaver\CommandProcessor\DTO\ReasonClosedCommandDTO;
+use Webbeaver\CommandProcessor\DTO\ReasonCommandDTO;
 
 class ReasonCommandHandlerTest extends TestCase
 {
     public function test_reason_set_command()
     {
         $repo = new InMemoryDealRepository;
-        $logger = new Logger('test');
-        $logger->pushHandler(new StreamHandler('php://stdout'));
-        $processor = new CommandProcessor($repo, $logger);
-        $processor->registerHandler(new ReasonSetCommandHandler($repo));
-        $deal = new Deal(222);
+        $dealId = 222;
+        $deal = new Deal($dealId);
         $repo->saveDeal($deal);
-        $context = new CommandContext(['deal' => $deal]);
-        $processor->process('/причина_закрытия удалена транзакция', $context);
-        $this->assertEquals('удалена транзакция', $repo->getProperty(222, 222));
+        $dto = new ReasonClosedCommandDTO('удалена транзакция');
+        $logger = new FileLogger(__DIR__.'/reason.log');
+        $adapter = new ReasonClosedCommandAdapter($dealId, $repo);
+        $adapter->handle($dto, $logger);
+        $this->assertEquals('удалена транзакция', $repo->getProperty($dealId, 222));
     }
 
     public function test_reason_show_command()
     {
         $repo = new InMemoryDealRepository;
-        $logger = new Logger('test');
-        $logger->pushHandler(new StreamHandler('php://stdout'));
-        $processor = new CommandProcessor($repo, $logger);
-        $processor->registerHandler(new ReasonShowCommandHandler($repo));
-        $deal = new Deal(223);
+        $dealId = 223;
+        $deal = new Deal($dealId);
         $repo->saveDeal($deal);
-        $repo->setProperty(223, 222, 'удалена транзакция');
-        $context = new CommandContext(['deal' => $deal]);
-        $processor->process('/причина', $context);
-        $messages = $repo->getMessages(223);
+        $repo->setProperty($dealId, 222, 'удалена транзакция');
+        $dto = new ReasonCommandDTO;
+        $logger = new FileLogger(__DIR__.'/reason.log');
+        $adapter = new ReasonCommandAdapter($dealId, $repo);
+        $adapter->handle($dto, $logger);
+        $messages = $repo->getMessages($dealId);
         $this->assertContains('Причина закрытия: удалена транзакция', $messages);
     }
 }
-

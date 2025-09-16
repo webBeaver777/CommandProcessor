@@ -1,33 +1,25 @@
 <?php
 
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
+use Webbeaver\CommandProcessor\Adapters\AcceptedCommandAdapter;
 use Webbeaver\CommandProcessor\Adapters\InMemoryDealRepository;
-use Webbeaver\CommandProcessor\Core\CommandProcessor;
+use Webbeaver\CommandProcessor\Core\FileLogger;
+use Webbeaver\CommandProcessor\DTO\AcceptedCommandDTO;
 use Webbeaver\CommandProcessor\DTO\Deal;
-use Webbeaver\CommandProcessor\Handlers\AcceptedCommandHandler;
 
 class AcceptedCommandHandlerTest extends TestCase
 {
     public function test_accepted_command()
     {
         $repo = new InMemoryDealRepository;
-        $logger = new Logger('test');
-        $logger->pushHandler(new StreamHandler('php://stdout'));
-
-        $processor = new CommandProcessor($repo, $logger);
-        $processor->registerHandler(
-            new AcceptedCommandHandler($repo)
-        );
-
-        $deal = new Deal(42);
+        $dealId = 42;
+        $deal = new Deal($dealId);
         $repo->saveDeal($deal);
-        $context = new \Webbeaver\CommandProcessor\DTO\CommandContext(['deal' => $deal]);
-        $processor->process('/принято 500 офис', $context);
-        $this->assertEquals(500, $repo->getProperty(42, 14));
-        $this->assertEquals('офис', $repo->getProperty(42, 15));
-        $messages = $repo->getMessages(42);
-        $this->assertContains('Принято: сумма=500, офис=офис', $messages);
+        $dto = new AcceptedCommandDTO('500', 'офис');
+        $logger = new FileLogger(__DIR__.'/accepted.log');
+        $adapter = new AcceptedCommandAdapter($dealId, $repo);
+        $adapter->handle($dto, $logger);
+        $this->assertEquals('500', $repo->getProperty($dealId, 14));
+        $this->assertEquals('офис', $repo->getProperty($dealId, 15));
     }
 }

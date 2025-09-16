@@ -11,4 +11,19 @@ final class Deal
     ) {}
 
     public array $messages = [];
+
+    public function setProperty(int $key, mixed $value): void
+    {
+        $this->properties[$key] = $value;
+    }
+
+    public function getProperty(int $key): mixed
+    {
+        return $this->properties[$key] ?? null;
+    }
+
+    public function addMessage(string $message): void
+    {
+        $this->messages[] = $message;
+    }
 }
