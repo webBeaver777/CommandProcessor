@@ -48,4 +48,28 @@ class CommandProcessorTest extends TestCase
     {
         $this->assertTrue(true);
     }
+
+    public function testContactCommandAdapterFactoryAndLogger()
+    {
+        // Подготовка фабрики и регистрация адаптера
+        $factory = new \Webbeaver\CommandProcessor\Core\CommandAdapterFactory();
+        $factory->registerAdapter(
+            \Webbeaver\CommandProcessor\DTO\ContactCommandDTO::class,
+            fn(int $dealId) => new \Webbeaver\CommandProcessor\Adapters\ContactCommandAdapter($dealId)
+        );
+
+        // Подготовка DTO, логгера и адаптера
+        $dealId = 42;
+        $dto = new \Webbeaver\CommandProcessor\DTO\ContactCommandDTO('Иван Иванов');
+        $logFile = __DIR__ . '/test-contact.log';
+        @unlink($logFile); // очистить лог перед тестом
+        $logger = new \Webbeaver\CommandProcessor\Core\FileLogger($logFile);
+
+        $adapter = $factory->getAdapter($dto, $dealId);
+        $adapter->handle($dto, $logger);
+
+        // Проверка, что лог содержит ожидаемую строку
+        $logContent = file_get_contents($logFile);
+        $this->assertStringContainsString('Выполнение Contact для сделки 42: Иван Иванов', $logContent);
+    }
 }
