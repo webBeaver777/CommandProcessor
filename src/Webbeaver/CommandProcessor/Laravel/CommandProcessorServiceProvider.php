@@ -50,9 +50,10 @@ class CommandProcessorServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Публикация тестов пакета в приложение Laravel
-        $this->publishes([
-            __DIR__ . '/../../tests/Feature' => base_path('tests/Feature'),
-        ], 'command-processor-tests');
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                \Webbeaver\CommandProcessor\Laravel\Commands\CopyCommandProcessorTests::class,
+            ]);
+        }
     }
 }
