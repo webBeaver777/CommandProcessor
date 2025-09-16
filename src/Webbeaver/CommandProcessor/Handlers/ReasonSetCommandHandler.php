@@ -17,8 +17,11 @@ class ReasonSetCommandHandler implements CommandHandlerInterface
 
     public function handle(string $args, CommandContext $context): mixed
     {
-        $this->repository->setProperty($context->deal->id, 222, $args);
-        $this->repository->addMessage($context->deal->id, "Причина закрытия установлена: {$args}");
+        $deal = $context->params['deal'] ?? null;
+        if (!$deal) return null;
+        $argument = trim(str_replace(self::commandName(), '', $args));
+        $this->repository->setProperty($deal->id, 222, $argument);
+        $this->repository->addMessage($deal->id, "Причина закрытия установлена: {$argument}");
         return null;
     }
 

@@ -28,7 +28,6 @@ class ContactCommandHandlerTest extends TestCase
         $repo->saveDeal($deal);
         $context = new \Webbeaver\CommandProcessor\DTO\CommandContext(['deal' => $deal]);
         $processor->process('/контакт', $context);
-
         $messages = $repo->getMessages(101);
         $this->assertContains('Контакт клиента: Иван Иванов', $messages);
     }

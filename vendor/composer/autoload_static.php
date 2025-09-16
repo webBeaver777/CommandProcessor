@@ -8,7 +8,6 @@ class ComposerStaticInitf20f60f180e1776cb9a238b2f9752509
 {
     public static $files = array (
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
-        '062a54fe8f6f91078b197f2922521dd9' => __DIR__ . '/..' . '/laravel/pint/overrides/Runner/Parallel/ProcessFactory.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
     );
 
@@ -31,12 +30,6 @@ class ComposerStaticInitf20f60f180e1776cb9a238b2f9752509
         array (
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
-            'Database\\Seeders\\' => 17,
-            'Database\\Factories\\' => 19,
-        ),
-        'A' => 
-        array (
-            'App\\' => 4,
         ),
     );
 
@@ -68,18 +61,6 @@ class ComposerStaticInitf20f60f180e1776cb9a238b2f9752509
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
-        ),
-        'Database\\Seeders\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/pint/database/seeders',
-        ),
-        'Database\\Factories\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/pint/database/factories',
-        ),
-        'App\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/laravel/pint/app',
         ),
     );
 

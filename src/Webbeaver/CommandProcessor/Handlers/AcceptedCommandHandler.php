@@ -17,12 +17,13 @@ class AcceptedCommandHandler implements CommandHandlerInterface
 
     public function handle(string $args, CommandContext $context): mixed
     {
-        [$amount, $office] = explode(' ', $args, 2) + [null, null];
-
-        $this->repository->setProperty($context->deal->id, 14, $amount);
-        $this->repository->setProperty($context->deal->id, 15, $office);
-
-        $this->repository->addMessage($context->deal->id, "Принято: сумма={$amount}, офис={$office}");
+        $deal = $context->params['deal'] ?? null;
+        if (!$deal) return null;
+        $argument = trim(str_replace(self::commandName(), '', $args));
+        [$amount, $office] = explode(' ', $argument, 2) + [null, null];
+        $this->repository->setProperty($deal->id, 14, $amount);
+        $this->repository->setProperty($deal->id, 15, $office);
+        $this->repository->addMessage($deal->id, "Принято: сумма={$amount}, офис={$office}");
 
         return null;
     }

@@ -52,7 +52,7 @@ class CommandProcessorServiceProvider extends ServiceProvider
     {
         // Публикация тестов пакета в приложение Laravel
         $this->publishes([
-            __DIR__ . '/../../publishable/tests/Feature' => base_path('tests/Feature'),
+            __DIR__ . '/../../tests/Feature' => base_path('tests/Feature'),
         ], 'command-processor-tests');
     }
 }

@@ -25,8 +25,9 @@ class AcceptedCommandHandlerTest extends TestCase
         $repo->saveDeal($deal);
         $context = new \Webbeaver\CommandProcessor\DTO\CommandContext(['deal' => $deal]);
         $processor->process('/принято 500 офис', $context);
-
         $this->assertEquals(500, $repo->getProperty(42, 14));
         $this->assertEquals('офис', $repo->getProperty(42, 15));
+        $messages = $repo->getMessages(42);
+        $this->assertContains('Принято: сумма=500, офис=офис', $messages);
     }
 }
