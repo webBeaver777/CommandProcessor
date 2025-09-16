@@ -15,11 +15,13 @@
       "Webbeaver\\CommandProcessor\\": "src/Webbeaver/CommandProcessor/"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "Webbeaver\\CommandProcessor\\Tests\\": "tests/"
-    }
-  },
   "minimum-stability": "stable",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Webbeaver\\CommandProcessor\\Laravel\\CommandProcessorServiceProvider"
+      ]
+    }
+  }
 }

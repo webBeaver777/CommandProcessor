@@ -14,7 +14,6 @@ class ComposerStaticInitf20f60f180e1776cb9a238b2f9752509
     public static $prefixLengthsPsr4 = array (
         'W' => 
         array (
-            'Webbeaver\\CommandProcessor\\Tests\\' => 33,
             'Webbeaver\\CommandProcessor\\' => 27,
         ),
         'P' => 
@@ -34,10 +33,6 @@ class ComposerStaticInitf20f60f180e1776cb9a238b2f9752509
     );
 
     public static $prefixDirsPsr4 = array (
-        'Webbeaver\\CommandProcessor\\Tests\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/tests',
-        ),
         'Webbeaver\\CommandProcessor\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/Webbeaver/CommandProcessor',
