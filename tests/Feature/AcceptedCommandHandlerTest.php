@@ -1,5 +1,7 @@
 <?php
 
+namespace Webbeaver\CommandProcessor\Tests\Feature;
+
 use PHPUnit\Framework\TestCase;
 use Webbeaver\CommandProcessor\Adapters\AcceptedCommandAdapter;
 use Webbeaver\CommandProcessor\Adapters\InMemoryDealRepository;

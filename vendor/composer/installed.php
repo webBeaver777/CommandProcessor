@@ -3,7 +3,7 @@
         'name' => 'webbeaver777/command-processor',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'e999f551f14e713edb0ab5d332ecfb90b8b2bc8d',
+        'reference' => '8b8e8014319b7f9e13b263270a326958785e547e',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -298,7 +298,7 @@
         'webbeaver777/command-processor' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'e999f551f14e713edb0ab5d332ecfb90b8b2bc8d',
+            'reference' => '8b8e8014319b7f9e13b263270a326958785e547e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
