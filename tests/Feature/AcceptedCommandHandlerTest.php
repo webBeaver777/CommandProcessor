@@ -31,3 +31,4 @@ class AcceptedCommandHandlerTest extends TestCase
         $this->assertEquals('офис', $repo->getProperty(42, 15));
     }
 }
+

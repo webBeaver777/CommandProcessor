@@ -1,5 +1,7 @@
 <?php
 
+namespace Webbeaver\CommandProcessor\Tests\Feature;
+
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
@@ -48,7 +50,6 @@ class ContactCommandHandlerTest extends TestCase
         $repo->saveDeal($deal);
 
         $processor->process('/контакт', 102);
-
         $messages = $repo->getMessages(102);
         $this->assertContains('Контакт клиента не указан', $messages);
     }

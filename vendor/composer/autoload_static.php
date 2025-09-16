@@ -13,6 +13,11 @@ class ComposerStaticInitf20f60f180e1776cb9a238b2f9752509
     );
 
     public static $prefixLengthsPsr4 = array (
+        'W' => 
+        array (
+            'Webbeaver\\CommandProcessor\\Tests\\' => 33,
+            'Webbeaver\\CommandProcessor\\' => 27,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
@@ -29,11 +34,6 @@ class ComposerStaticInitf20f60f180e1776cb9a238b2f9752509
             'Database\\Seeders\\' => 17,
             'Database\\Factories\\' => 19,
         ),
-        'C' => 
-        array (
-            'CommandProcessor\\Tests\\' => 23,
-            'CommandProcessor\\' => 17,
-        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -41,6 +41,14 @@ class ComposerStaticInitf20f60f180e1776cb9a238b2f9752509
     );
 
     public static $prefixDirsPsr4 = array (
+        'Webbeaver\\CommandProcessor\\Tests\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/tests',
+        ),
+        'Webbeaver\\CommandProcessor\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
@@ -68,14 +76,6 @@ class ComposerStaticInitf20f60f180e1776cb9a238b2f9752509
         'Database\\Factories\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/pint/database/factories',
-        ),
-        'CommandProcessor\\Tests\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/tests',
-        ),
-        'CommandProcessor\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
         ),
         'App\\' => 
         array (
