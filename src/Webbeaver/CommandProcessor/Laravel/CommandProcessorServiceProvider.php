@@ -27,22 +27,10 @@ class CommandProcessorServiceProvider extends ServiceProvider
             $processor = new CommandProcessor($repo, $logger);
 
             // Регистрируем дефолтные хэндлеры
-            $processor->registerHandler(
-                AcceptedCommandHandler::commandName(),
-                new AcceptedCommandHandler($repo)
-            );
-            $processor->registerHandler(
-                ContactCommandHandler::commandName(),
-                new ContactCommandHandler($repo)
-            );
-            $processor->registerHandler(
-                ReasonSetCommandHandler::commandName(),
-                new ReasonSetCommandHandler($repo)
-            );
-            $processor->registerHandler(
-                ReasonShowCommandHandler::commandName(),
-                new ReasonShowCommandHandler($repo)
-            );
+            $processor->registerHandler(new AcceptedCommandHandler($repo));
+            $processor->registerHandler(new ContactCommandHandler($repo));
+            $processor->registerHandler(new ReasonSetCommandHandler($repo));
+            $processor->registerHandler(new ReasonShowCommandHandler($repo));
 
             return $processor;
         });
