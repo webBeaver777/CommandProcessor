@@ -8,7 +8,7 @@ CommandProcessor — PHP-библиотека для обработки текс
 ## Возможности
 - Простая регистрация и обработка текстовых команд
 - Гибкая архитектура: легко расширять новыми обработчиками
-- Интеграция с Laravel (ServiceProvider, artisan-команда)
+- Интеграция с Laravel (ServiceProvider, artisan-команды)
 - PSR-4 автозагрузка
 - Логирование команд через PSR-3
 - Покрытие тестами всех бизнес-команд
@@ -18,15 +18,41 @@ CommandProcessor — PHP-библиотека для обработки текс
 composer require webbeaver777/command-processor
 ```
 
-## Публикация тестов
-Тесты пакета можно скопировать в папку `tests/Feature` вашего проекта Laravel с помощью artisan-команды:
+## Интеграция с Laravel
 
+> В Laravel 12 сервис-провайдер CommandProcessorServiceProvider регистрируется автоматически через package discovery. Ручных действий не требуется.
+
+2. Проверьте, что artisan-команды доступны:
+   ```bash
+   php artisan list | grep command
+   ```
+   Должны быть:
+   - `command-processor:copy-tests` — копирует тесты пакета в ваш проект
+   - `command:processor` — обрабатывает команды для сделки
+
+## Использование artisan-команды для обработки команд
+
+Команда для обработки команд:
+```bash
+php artisan command:processor <deal_id> <команда>
+```
+
+**Пример:**
+```bash
+php artisan command:processor 45 "/принято 500 офис"
+```
+- `<deal_id>` — ID сделки
+- `<команда>` — текстовая команда (например, /принято 500 офис)
+
+Результат обработки будет выведен в консоль.
+
+## Публикация тестов
+
+Тесты пакета можно скопировать в папку `tests/Feature` вашего проекта Laravel с помощью artisan-команды:
 ```bash
 php artisan command-processor:copy-tests
 ```
-
 Эта команда скопирует все тесты из пакета в директорию вашего проекта. После этого вы сможете запускать их стандартным способом:
-
 ```bash
 ./vendor/bin/phpunit
 ```
@@ -52,21 +78,24 @@ $context = new \Webbeaver\CommandProcessor\DTO\CommandContext(['deal' => $deal])
 $processor->process('/принято 123 офис', $context); // пример вызова
 ```
 
-## Интеграция с Laravel
-Пакет содержит сервис-провайдер и artisan-команду для Laravel:
-
-```php
-// config/app.php
-'providers' => [
-    // ...
-    Webbeaver\CommandProcessor\Laravel\CommandProcessorServiceProvider::class,
-],
-```
-
 ## Структура пакета
 - `src/` — исходный код пакета
+  - `Laravel/CommandProcessorCommand.php` — artisan-команда для обработки команд
+  - `Laravel/Commands/CopyCommandProcessorTests.php` — artisan-команда для копирования тестов
+  - `Laravel/CommandProcessorServiceProvider.php` — сервис-провайдер для интеграции
 - `tests/Feature/` — тесты для публикации в проект Laravel
 - `tests/` — директория для тестов
+
+## FAQ / Типичные ошибки
+
+**Команда не видна в artisan:**
+- Проверьте, что ServiceProvider добавлен`.
+- Запустите `composer dump-autoload` для обновления автозагрузки.
+- Проверьте список команд: `php artisan list | grep command`
+
+**Ошибка при запуске команды:**
+- Проверьте, что передаёте оба аргумента: ID сделки и команду.
+- Пример корректного вызова: `php artisan command:processor 42 "/принято 500 офис"`
 
 ---
 
